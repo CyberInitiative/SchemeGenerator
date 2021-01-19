@@ -14,7 +14,6 @@ public class Element extends AnchorPane {
     private Shape fullElement;
 
     public Element(){
-
         Shape body = new Rectangle(75,50);
         Line output = new Line(74,25,100,25);
         output.setStrokeWidth(2);

@@ -190,7 +190,6 @@ public class RPN_Interpreter {
             System.out.println("Вы ввели неверное количество скобок");
         }
 
-
         StringBuilder result = new StringBuilder(output.size());
         for (Character c : output) {
             result.append(c);
