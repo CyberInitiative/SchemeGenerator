@@ -2,7 +2,6 @@ package project;
 
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.shape.Circle;
 import project.model.Element;
 import project.model.FormulaDecoder;
 import project.model.RPN_Interpreter;
@@ -35,9 +34,9 @@ public class Controller {
 
         System.out.println(schemeGenerator.negativeOperands);
         System.out.println(schemeGenerator.positiveOperands);
-        System.out.println(schemeGenerator.negativeInputs);
-        System.out.println(schemeGenerator.positiveInputs);
-        System.out.println(schemeGenerator.lineArrayList);
+        //System.out.println(schemeGenerator.negativeInputs);
+        System.out.println(schemeGenerator.positiveStartLinePoint);
+        System.out.println(schemeGenerator.negativeLineArrayList);
         //schemeGenerator.positiveInputs.sort(Character::compareTo);
         //schemeGenerator.negativeOperands.sort(Character::compareTo);
     }
@@ -47,17 +46,26 @@ public class Controller {
         SchemeGenerator schemeGenerator = new SchemeGenerator();
         System.out.println(schemeGenerator.getNegativeInputs("!A*!(B+C)+!(A+!B)*D+A*(!C*!D+!B*C)"));
         schemeGenerator.getPositiveInputs();
-        schemeGenerator.buildInputLines();
+        //schemeGenerator.buildTheNegativeLines();
         //element = new Element();
         //element.relocate(100,20);
         //circle.relocate(200, 40);
         //anchorPane.getChildren().add(element);
         //anchorPane.getChildren().add(circle);
         //System.out.println(element.getScaleY());
-        for (int i = 0; i < schemeGenerator.lineArrayList.size(); i++) {
-            anchorPane.getChildren().add(schemeGenerator.lineArrayList.get(i));
+        for (int i = 0; i < schemeGenerator.negativeLineArrayList.size(); i++) {
+            anchorPane.getChildren().add(schemeGenerator.negativeLineArrayList.get(i));
         }
         anchorPane.getChildren().addAll(schemeGenerator);
+        System.out.println("");
+
+        //System.out.println(schemeGenerator.negativeInputs);
+        //System.out.println(schemeGenerator.positiveInputs);
+        System.out.println(schemeGenerator.negativeOperands);
+        schemeGenerator.buildTheNegativeLines("!A*!(B+C)+!(A+!B)*D+A*(!C*!D+!B*C)");
+        System.out.println(schemeGenerator.connectPoints.size());
+        System.out.println(schemeGenerator.connectPoints);
+        System.out.println(schemeGenerator.negativeLineArrayList);
     }
 }
 
