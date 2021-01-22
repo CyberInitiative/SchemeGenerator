@@ -25,7 +25,6 @@ public class Element extends AnchorPane {
         getChildren().addAll(fullElement);
     }
 
-
     /*
     javafx.scene.shape.Shape shape;
     shape = new Rectangle(75,50);

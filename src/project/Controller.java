@@ -28,15 +28,14 @@ public class Controller {
         //System.out.println("(A+B)+(A*C)*(D*(A+D)+C)");
         String expr = parser.parse("!A*!(B+C)+!(A+!B)*D+A*(!C*!D+!B*C)");
 
-
         FormulaDecoder decoder = new FormulaDecoder();
-        System.out.println(decoder.decoding(expr));
+        //System.out.println(decoder.decoding(expr));
 
-        System.out.println(schemeGenerator.negativeOperands);
-        System.out.println(schemeGenerator.positiveOperands);
+        //System.out.println(schemeGenerator.negativeOperands);
+        //System.out.println(schemeGenerator.positiveOperands);
         //System.out.println(schemeGenerator.negativeInputs);
-        System.out.println(schemeGenerator.positiveStartLinePoint);
-        System.out.println(schemeGenerator.negativeLineArrayList);
+        //System.out.println(schemeGenerator.positiveStartLinePoint);
+        //System.out.println(schemeGenerator.negativeLineArrayList);
         //schemeGenerator.positiveInputs.sort(Character::compareTo);
         //schemeGenerator.negativeOperands.sort(Character::compareTo);
     }
@@ -57,18 +56,15 @@ public class Controller {
             anchorPane.getChildren().add(schemeGenerator.negativeLineArrayList.get(i));
         }
         anchorPane.getChildren().addAll(schemeGenerator);
-        System.out.println("");
 
-        //System.out.println(schemeGenerator.negativeInputs);
-        //System.out.println(schemeGenerator.positiveInputs);
-        System.out.println(schemeGenerator.negativeOperands);
-        schemeGenerator.buildTheNegativeLines("!A*!(B+C)+!(A+!B)*D+A*(!C*!D+!B*C)");
-        System.out.println(schemeGenerator.connectPoints.size());
-        System.out.println(schemeGenerator.connectPoints);
-        System.out.println(schemeGenerator.negativeLineArrayList);
+        schemeGenerator.buildStartLines("!A*!(B+C)+!(A+!B)*D+A*(!C*!D+!B*C)");
+        schemeGenerator.buildStartPoints("!A*!(B+C)+!(A+!B)*D+A*(!C*!D+!B*C)");
+        //System.out.println(schemeGenerator.connectPoints.size());
+        //System.out.println(schemeGenerator.connectPointsPos.size());
+        //System.out.println(schemeGenerator.negativeLineArrayList.size());
+        //System.out.println(schemeGenerator.positiveLineArrayList.size());
     }
 }
-
 
 /*
         workPane.setOnMouseEntered((event) -> {
