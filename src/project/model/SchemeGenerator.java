@@ -26,6 +26,7 @@ public class SchemeGenerator extends AnchorPane {
     double PosCoordinateXStartPoint = 0;
     double coordinateYStartPoint = 50;
     double lineSegment = 50;
+    double lineLength = 0;
 
     public ArrayList<Character> getNegativeInputs(String expression) {
         for (Character character : expression.toCharArray()) {
@@ -100,7 +101,7 @@ public class SchemeGenerator extends AnchorPane {
         }
 
         int totalOperandNumber = negativeOperands.size() + positiveOperands.size(); //кол-во всех операндов в формуле
-        double lineWidth = totalOperandNumber * lineSegment; // размер линии
+        lineLength = totalOperandNumber * lineSegment; // размер линии
 
         ArrayList<Character> counting = new ArrayList<>(negativeOperands);
         counting.sort(Character::compareTo);
@@ -114,7 +115,7 @@ public class SchemeGenerator extends AnchorPane {
         counting.removeIf(x -> x.equals('#'));
 
         for (int i = 0; i < negativeStartLinePoint.size(); i++) {
-            Line line = new Line(negativeStartLinePoint.get(i).getX(), negativeStartLinePoint.get(i).getY(), negativeStartLinePoint.get(i).getX(), negativeStartLinePoint.get(i).getY() + lineWidth);
+            Line line = new Line(negativeStartLinePoint.get(i).getX(), negativeStartLinePoint.get(i).getY(), negativeStartLinePoint.get(i).getX(), negativeStartLinePoint.get(i).getY() + lineLength);
             ConnectLine connectLine = new ConnectLine(counting.get(i), line);
             negativeLineArrayList.add(connectLine);
             getChildren().add(line);
@@ -131,14 +132,14 @@ public class SchemeGenerator extends AnchorPane {
         countingPositive.removeIf(x -> x.equals('#'));
 
         for (int i = 0; i < positiveStartLinePoint.size(); i++) {
-            Line line = new Line(positiveStartLinePoint.get(i).getX(), positiveStartLinePoint.get(i).getY(), positiveStartLinePoint.get(i).getX(), positiveStartLinePoint.get(i).getY() + lineWidth);
+            Line line = new Line(positiveStartLinePoint.get(i).getX(), positiveStartLinePoint.get(i).getY(), positiveStartLinePoint.get(i).getX(), positiveStartLinePoint.get(i).getY() + lineLength);
             ConnectLine connectLine = new ConnectLine(countingPositive.get(i), line);
             positiveLineArrayList.add(connectLine);
             getChildren().add(line);
         }
     }
 
-    public void buildStartPoints(String expression) {
+    public void buildStartConnectPoints(String expression) {
         ArrayList<Character> convertedString = new ArrayList<>();
         for (Character character : expression.toCharArray()) {
             convertedString.add(character);
@@ -156,7 +157,7 @@ public class SchemeGenerator extends AnchorPane {
                         }
                     }
                 }
-                if(convertedString.get(q) != '#'){
+                if (convertedString.get(q) != '#') {
                     for (int r = 0; r < positiveLineArrayList.size(); r++) {
                         if (positiveLineArrayList.get(r).name == convertedString.get(q)) {
                             totalPointsNames.add(positiveLineArrayList.get(r).name.toString());
@@ -165,12 +166,12 @@ public class SchemeGenerator extends AnchorPane {
                 }
             }
         }
-        for(int z = 0; z < totalPointsNames.size(); z++){
-            if(totalPointsNames.get(z).length() > 1){
-                if(z == 0){
-                    for(int x = 0; x < negativeLineArrayList.size(); x++){
-                        if(negativeLineArrayList.get(x).name.equals(totalPointsNames.get(z).charAt(1))){
-                            Point2D firstPoint = new Point2D(negativeLineArrayList.get(x).line.getStartX(), negativeLineArrayList.get(x).line.getStartY() + 25);
+        for (int z = 0; z < totalPointsNames.size(); z++) {
+            if (totalPointsNames.get(z).length() > 1) {
+                if (z == 0) {
+                    for (int x = 0; x < negativeLineArrayList.size(); x++) {
+                        if (negativeLineArrayList.get(x).name.equals(totalPointsNames.get(z).charAt(1))) {
+                            Point2D firstPoint = new Point2D(negativeLineArrayList.get(x).line.getStartX(), negativeLineArrayList.get(x).line.getStartY() + 40);
                             ConnectPoint connectPoint = new ConnectPoint(totalPointsNames.get(z), firstPoint);
                             connectPoints.add(connectPoint);
                             Circle circle = new Circle(firstPoint.getX(), firstPoint.getY(), 3);
@@ -178,11 +179,32 @@ public class SchemeGenerator extends AnchorPane {
                             //System.out.println(firstPoint);
                         }
                     }
+                } else {
+                    for (int x = 0; x < negativeLineArrayList.size(); x++) {
+                        if (negativeLineArrayList.get(x).name.equals(totalPointsNames.get(z).charAt(1))) {
+                            Point2D point2D = new Point2D(negativeLineArrayList.get(x).line.getStartX(), connectPoints.get(connectPoints.size() - 1).point2D.getY() + 40);
+                            ConnectPoint connectPoint = new ConnectPoint(totalPointsNames.get(z), point2D);
+                            connectPoints.add(connectPoint);
+                            Circle circle = new Circle(point2D.getX(), point2D.getY(), 3);
+                            getChildren().addAll(circle);
+                        }
+                    }
                 }
-                else {
-                    for(int x = 0; x < negativeLineArrayList.size(); x++){
-                        if(negativeLineArrayList.get(x).name.equals(totalPointsNames.get(z).charAt(1))){
-                            Point2D point2D = new Point2D(negativeLineArrayList.get(x).line.getStartX(), connectPoints.get(connectPoints.size() - 1).point2D.getY() + 25);
+            } else {
+                if (z == 0) {
+                    for (int x = 0; x < positiveLineArrayList.size(); x++) {
+                        if (positiveLineArrayList.get(x).name.toString().equals(totalPointsNames.get(z))) {
+                            Point2D firstPoint = new Point2D(positiveLineArrayList.get(x).line.getStartX(), positiveLineArrayList.get(x).line.getStartY() + 40);
+                            ConnectPoint connectPoint = new ConnectPoint(totalPointsNames.get(z), firstPoint);
+                            connectPoints.add(connectPoint);
+                            Circle circle = new Circle(firstPoint.getX(), firstPoint.getY(), 3);
+                            getChildren().addAll(circle);
+                        }
+                    }
+                } else {
+                    for (int x = 0; x < positiveLineArrayList.size(); x++) {
+                        if (positiveLineArrayList.get(x).name.toString().equals(totalPointsNames.get(z))) {
+                            Point2D point2D = new Point2D(positiveLineArrayList.get(x).line.getStartX(), connectPoints.get(connectPoints.size() - 1).point2D.getY() + 40);
                             ConnectPoint connectPoint = new ConnectPoint(totalPointsNames.get(z), point2D);
                             connectPoints.add(connectPoint);
                             Circle circle = new Circle(point2D.getX(), point2D.getY(), 3);
@@ -192,7 +214,14 @@ public class SchemeGenerator extends AnchorPane {
                 }
             }
         }
-        //System.out.println(totalPointsNames);
+        if (lineLength > connectPoints.get(connectPoints.size() - 1).point2D.getY() + 40) {
+            for (int i = 0; i < positiveLineArrayList.size(); i++) {
+                positiveLineArrayList.get(i).line.setEndY(connectPoints.get(connectPoints.size() - 1).point2D.getY() + 40);
+            }
+            for (int i = 0; i < negativeLineArrayList.size(); i++) {
+                negativeLineArrayList.get(i).line.setEndY(connectPoints.get(connectPoints.size() - 1).point2D.getY() + 40);
+            }
+        }
     }
 }
 

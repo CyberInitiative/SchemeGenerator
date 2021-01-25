@@ -58,7 +58,7 @@ public class Controller {
         anchorPane.getChildren().addAll(schemeGenerator);
 
         schemeGenerator.buildStartLines("!A*!(B+C)+!(A+!B)*D+A*(!C*!D+!B*C)");
-        schemeGenerator.buildStartPoints("!A*!(B+C)+!(A+!B)*D+A*(!C*!D+!B*C)");
+        schemeGenerator.buildStartConnectPoints("!A*!(B+C)+!(A+!B)*D+A*(!C*!D+!B*C)");
         //System.out.println(schemeGenerator.connectPoints.size());
         //System.out.println(schemeGenerator.connectPointsPos.size());
         //System.out.println(schemeGenerator.negativeLineArrayList.size());
